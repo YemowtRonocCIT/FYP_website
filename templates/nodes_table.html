@@ -20,7 +20,7 @@
         {% endif %}
 
         <h1>Add node below</h1>
-        <form action="http://127.0.0.1:5000/nodes" method="POST">
+        <form action="http://{{ host_ip }}:5000/node/" method="POST">
             <input type="text" name="sigfox_id" id="sigfox_id">
             <input type="submit">
         </form>
