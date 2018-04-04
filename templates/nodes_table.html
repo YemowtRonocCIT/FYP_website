@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>View all nodes</title>
+    </head>
+
+    <body>
+        {% if nodes %}
+            <table>
+            {% for node in nodes %}
+                <tr>
+                    <td>{{ node.id }}</td>
+                    <td>{{ node.sigfox_id }}</td>
+                    <td>{{ node.active }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+
+        {% else %}
+            <p>No nodes...</p>
+        {% endif %}
+
+        <h1>Add node below</h1>
+        <form action="http://127.0.0.1:5000/nodes" method="POST">
+            <input type="text" name="sigfox_id" id="sigfox_id">
+            <input type="submit">
+        </form>
+    </body>
+</html>
