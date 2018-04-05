@@ -35,7 +35,7 @@ def nodes_page():
     return render_template('nodes_table.html', nodes=data, host_ip=HOST_IP_ADDRESS)
 
 @app.route(LOCATION_SUFFIX, methods=['GET', 'POST'])
-def locations_pages():
+def locations_page():
     url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX)
     if request.method == 'POST':
         location_name = request.form.get(LOCATION_NAME_KEY)
