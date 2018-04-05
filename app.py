@@ -11,12 +11,18 @@ HOST_IP_ADDRESS = '192.168.153.1'
 
 NODE_SUFFIX = '/node/'
 LOCATION_SUFFIX = '/location/'
+BUOY_SUFFIX = '/buoy/'
 
 HTTP_PREFIX = 'http://'
 
 SIGFOX_ID_KEY = 'sigfox_id'
 LOCATION_NAME_KEY = 'location_name'
 LOCATION_TYPE_KEY = 'location_type'
+BUOY_LOCATION_KEY = 'buoy_location'
+LATITUDE_KEY = 'latitude'
+LONGITUDE_KEY = 'longitude'
+AT_LOCATION_KEY = 'at_location'
+
 
 @app.route('/')
 def index_page():
@@ -49,6 +55,30 @@ def locations_page():
     response = requests.get(url)
     data = json.loads(response.text)
     return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS)
+
+@app.route(BUOY_SUFFIX, methods=['GET', 'POST'])
+def buoys_page():
+    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
+    if request.method == 'POST':
+        buoy_location = request.form.get(BUOY_LOCATION_KEY)
+        buoy_latitude = request.form.get(LATITUDE_KEY)
+        buoy_longitude = request.form.get(LONGITUDE_KEY)
+        at_location = request.form.get(AT_LOCATION_KEY)
+        data = {
+            BUOY_LOCATION_KEY: buoy_location,
+            LATITUDE_KEY: buoy_latitude,
+            LONGITUDE_KEY: buoy_longitude,
+            AT_LOCATION_KEY: at_location
+        }
+
+        requests.post(url, data)
+    
+    response = requests.get(url)
+    data = json.loads(response.text)
+    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX)
+    response = requests.get(url)
+    locations = json.loads(response.text)
+    return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, locations=locations)
 
 if __name__ == '__main__':
     app.run(host=HOST_IP_ADDRESS)

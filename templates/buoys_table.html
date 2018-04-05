@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>View all buoys</title>
+    </head>
+
+    <body>
+        {% if buoys %}
+            <table>
+            {% for buoy in buoys %}
+                <tr>
+                    <td>{{ buoy.buoy_id }}</td>
+                    <td>{{ buoy.buoy_name }}</td>
+                    <td>{{ buoy.buoy_type }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+
+        {% else %}
+            <p>No buoys...</p>
+        {% endif %}
+
+        <h1>Add buoy below</h1>
+
+        {% if host_ip %}
+        <form action="http://{{ host_ip }}:5000/buoy/" method="POST">
+        {% else %}
+        <form action="http://127.0.0.1:5000/buoy/" method="POST">
+        {% endif %}
+            
+        {% if locations %}
+            <p>Location Name: 
+                <select name="buoy_location" id="buoy_location">
+                    {% for location in locations %}
+                        <option value="{{ location.location_name }}">{{ location.location_name }}</option>
+                    {% endfor %}
+                </select>   
+            </p>
+        {% else %}
+            <input type="hidden" name="buoy_location" id="buoy_location" value="Cork City">
+        {% endif %}
+
+            <p>Is the Buoy at the location? : 
+                <select name="at_location" id="at_location">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </p>
+
+            <p>Latitude: 
+                <input type="number" step="any" name="latitude" id="latitude">
+            </p>
+
+            <p>Longitude: 
+                <input type="number" step="any" name="longitude" id="longitude">
+            </p>
+
+            <input type="submit">
+        </form>
+    </body>
+</html>
