@@ -9,8 +9,8 @@
             {% for buoy in buoys %}
                 <tr>
                     <td>{{ buoy.buoy_id }}</td>
-                    <td>{{ buoy.buoy_name }}</td>
-                    <td>{{ buoy.buoy_type }}</td>
+                    <td>{{ buoy.at_location }}</td>
+                    <td>{{ buoy.time_checked }}</td>
                 </tr>
             {% endfor %}
             </table>
