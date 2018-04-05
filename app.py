@@ -23,6 +23,8 @@ LATITUDE_KEY = 'latitude'
 LONGITUDE_KEY = 'longitude'
 AT_LOCATION_KEY = 'at_location'
 
+LOCATION_TYPES = ['URBAN', 'SUBURBAN', 'RURAL', 'BEACH', 'QUAY', 'RIVER']
+
 
 @app.route('/')
 def index_page():
@@ -54,7 +56,8 @@ def locations_page():
     
     response = requests.get(url)
     data = json.loads(response.text)
-    return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS)
+    return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS,
+                                                location_types=LOCATION_TYPES)
 
 @app.route(BUOY_SUFFIX, methods=['GET', 'POST'])
 def buoys_page():
