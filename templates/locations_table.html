@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>View all locations</title>
+    </head>
+
+    <body>
+        {% if locations %}
+            <table>
+            {% for location in locations %}
+                <tr>
+                    <td>{{ location.location_id }}</td>
+                    <td>{{ location.location_name }}</td>
+                    <td>{{ location.location_type }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+
+        {% else %}
+            <p>No locations...</p>
+        {% endif %}
+
+        <h1>Add location below</h1>
+
+        {% if host_ip %}
+        <form action="http://{{ host_ip }}:5000/location/" method="POST">
+        {% else %}
+        <form action="http://127.0.0.1:5000/location/" method="POST">
+        {% endif %}
+            <p>Location Name: 
+                <input type="text" name="location_name" id="location_name">
+            </p>
+
+            <p>Location Type: 
+                <input type="text" name="location_type" id="location_type">
+            </p>
+
+            <input type="submit">
+        </form>
+    </body>
+</html>
