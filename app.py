@@ -16,6 +16,7 @@ BUOY_SUFFIX = '/buoy/'
 HTTP_PREFIX = 'http://'
 
 SIGFOX_ID_KEY = 'sigfox_id'
+BUOY_ID_KEY = 'buoy_id'
 LOCATION_NAME_KEY = 'location_name'
 LOCATION_TYPE_KEY = 'location_type'
 BUOY_LOCATION_KEY = 'buoy_location'
@@ -36,11 +37,22 @@ def nodes_page():
     if request.method == 'POST':
         sigfox_id = request.form.get(SIGFOX_ID_KEY)
         data = {SIGFOX_ID_KEY: sigfox_id}
+
+        buoy_id = request.form.get(BUOY_ID_KEY)
+        if buoy_id is not None and buoy_id.lower() != 'none':
+            data[BUOY_ID_KEY] = buoy_id
+
         requests.post(url, data)
     
     response = requests.get(url)
-    data = json.loads(response.text)
-    return render_template('nodes_table.html', nodes=data, host_ip=HOST_IP_ADDRESS)
+    nodes = json.loads(response.text)
+
+    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
+    response = requests.get(url)
+    buoys = json.loads(response.text)
+
+    return render_template('nodes_table.html', nodes=nodes, 
+                        host_ip=HOST_IP_ADDRESS, buoys=buoys)
 
 @app.route(LOCATION_SUFFIX, methods=['GET', 'POST'])
 def locations_page():
