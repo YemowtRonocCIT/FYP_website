@@ -4,6 +4,8 @@ from flask import Flask
 from flask import render_template
 from flask import request
 
+from login_details import GMAPS_API_KEY
+
 app = Flask(__name__)
 
 API_IP_ADDRESS = '127.0.0.1:5000'
@@ -52,7 +54,8 @@ def nodes_page():
     buoys = json.loads(response.text)
 
     return render_template('nodes_table.html', nodes=nodes, 
-                        host_ip=HOST_IP_ADDRESS, buoys=buoys)
+                        host_ip=HOST_IP_ADDRESS, buoys=buoys, 
+                        gmaps_api_key=GMAPS_API_KEY)
 
 @app.route(LOCATION_SUFFIX, methods=['GET', 'POST'])
 def locations_page():
