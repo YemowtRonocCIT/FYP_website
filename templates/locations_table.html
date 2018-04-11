@@ -9,7 +9,11 @@
             {% for location in locations %}
                 <tr>
                     <td>{{ location.location_id }}</td>
-                    <td>{{ location.location_name }}</td>
+                    <td>
+                        <a href="http://{{ host_ip }}:5000/location/{{ location.location_id }}">
+                            {{ location.location_name }}
+                        </a>
+                    </td>
                     <td>{{ location.location_type }}</td>
                 </tr>
             {% endfor %}
