@@ -14,8 +14,10 @@ HOST_IP_ADDRESS = '192.168.153.1'
 NODE_SUFFIX = '/node/'
 LOCATION_SUFFIX = '/location/'
 BUOY_SUFFIX = '/buoy/'
+REMOVE_BUOY_SUFFIX = '/remove_buoy/'
 
 LOCATION_ID = '<location_id>/'
+BUOY_ID = '<buoy_id>/'
 
 HTTP_PREFIX = 'http://'
 
@@ -110,6 +112,13 @@ def buoys_page():
     response = requests.get(url)
     locations = json.loads(response.text)
     return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, locations=locations)
+
+@app.route(REMOVE_BUOY_SUFFIX + BUOY_ID, methods=['GET'])
+def remove_buoy(buoy_id):
+    url = "%s%s%s" % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
+    url += '%s/' % (buoy_id, )
+    requests.delete(url)
+    return buoys_page()
 
 if __name__ == '__main__':
     app.run(host=HOST_IP_ADDRESS)
