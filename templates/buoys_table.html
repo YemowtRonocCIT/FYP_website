@@ -18,6 +18,11 @@
                     <td>{{ buoy.location_name }}</td>
                     <td>{{ buoy.latitude }}</td>
                     <td>{{ buoy.longitude }}</td>
+                    <td>
+                        <a href="http://www.google.com/maps/place/{{ buoy.latitude }},{{ buoy.longitude }}">
+                            Google Maps
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </table>
