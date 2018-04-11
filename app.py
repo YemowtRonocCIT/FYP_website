@@ -15,10 +15,13 @@ NODE_SUFFIX = '/node/'
 LOCATION_SUFFIX = '/location/'
 BUOY_SUFFIX = '/buoy/'
 
+LOCATION_ID = '<location_id>/'
+
 HTTP_PREFIX = 'http://'
 
 SIGFOX_ID_KEY = 'sigfox_id'
 BUOY_ID_KEY = 'buoy_id'
+LOCATION_ID_KEY = 'location_id'
 LOCATION_NAME_KEY = 'location_name'
 LOCATION_TYPE_KEY = 'location_type'
 BUOY_LOCATION_KEY = 'buoy_location'
@@ -73,6 +76,16 @@ def locations_page():
     data = json.loads(response.text)
     return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS,
                                                 location_types=LOCATION_TYPES)
+
+@app.route(LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
+def buoys_by_location_page(location_id):
+    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
+    url += '%s/' % (location_id, )
+    response = requests.get(url)
+    data = json.loads(response.text)
+    title = "Buoys at %s" % (data[0]['location_name'], )
+    return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, title=title)
+
 
 @app.route(BUOY_SUFFIX, methods=['GET', 'POST'])
 def buoys_page():

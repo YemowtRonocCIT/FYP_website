@@ -1,6 +1,10 @@
 <html>
     <head>
-        <title>View all buoys</title>
+        {% if title %}
+            <title>{{ title }}</title>
+        {% else %}
+            <title>View buoys</title>
+        {% endif %}
     </head>
 
     <body>
