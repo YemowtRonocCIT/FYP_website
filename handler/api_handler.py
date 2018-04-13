@@ -41,6 +41,18 @@ class ApiHandler(object):
         url = self.base_url % (url_suffix)
         response = requests.post(url, data)
         return response.ok
+    
+    def patch(self, url_suffix, identifier):
+        """
+        Sends PATCH request to give small update
+
+        url_suffix (str): Identifies the type of data to be modified
+        identifier (str): Identifies the exact data to be modified
+        """
+        suffix = "%s%s" % (url_suffix, identifier)
+        url = self.base_url % (suffix, )
+        response = requests.patch(url)
+        return response.ok
 
     def get_specific_data(self, url_suffix, identifier):
         """
