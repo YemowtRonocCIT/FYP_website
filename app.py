@@ -97,9 +97,11 @@ def locations_page():
 def buoys_by_location_page(location_id):
     url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
     url += '%s/' % (location_id, )
+    title = "Locations Page"
     response = requests.get(url)
     data = json.loads(response.text)
-    title = "Buoys at %s" % (data[0]['location_name'], )
+    if len(data) > 0:
+        title = "Buoys at %s" % (data[0]['location_name'], )
     return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, title=title)
 
 
