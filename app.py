@@ -24,6 +24,7 @@ REMOVE_NODE_SUFFIX = '/remove_node/'
 REMOVE_LOCATION_SUFFIX = '/remove_location/'
 NODE_STATUS_SUFFIX = '/node_status/'
 LAST_MESSAGE_SUFFIX = '/last_message/'
+UPDATE_BUOY_SUFFIX = '/update_buoy/'
 
 LOCATION_ID = '<location_id>/'
 BUOY_ID = '<buoy_id>/'
@@ -139,14 +140,18 @@ def remove_node(sigfox_id):
 
 @app.route(NODE_STATUS_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def change_node_status(sigfox_id):
-    url = "%s%s%s%s/" % (HTTP_PREFIX, API_IP_ADDRESS, NODE_SUFFIX, sigfox_id)
-    requests.patch(url)
+    API.patch(NODE_SUFFIX, sigfox_id)
     return redirect(url_for('nodes_page'))
 
 @app.route(REMOVE_LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
 def remove_location(location_id):
     API.remove_element(LOCATION_SUFFIX, location_id)
     return redirect(url_for('locations_page'))
+
+@app.route(UPDATE_BUOY_SUFFIX + BUOY_ID, methods=['GET', 'POST'])
+def update_buoy_time_checked(buoy_id):
+    API.patch(BUOY_SUFFIX, buoy_id)
+    return redirect(url_for('buoys_page'))
 
 if __name__ == '__main__':
     app.run(host=HOST_IP_ADDRESS)
