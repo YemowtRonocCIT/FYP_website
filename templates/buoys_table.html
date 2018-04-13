@@ -10,6 +10,16 @@
     <body>
         {% if buoys %}
             <table>
+                <thead>
+                    <th>Buoy ID</th>
+                    <th>At Location</th>
+                    <th>Time Checked</th>
+                    <th>Location</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Google Maps Link</th>
+                    <th>Remove Buoy</th>
+                </thead>
             {% for buoy in buoys %}
                 <tr>
                     <td>{{ buoy.buoy_id }}</td>
