@@ -39,7 +39,7 @@ LOCATION_TYPES = ['URBAN', 'SUBURBAN', 'RURAL', 'BEACH', 'QUAY', 'RIVER']
 
 @app.route('/')
 def index_page():
-    return "Hello, World!"
+    return render_template('index.html')
 
 @app.route(NODE_SUFFIX, methods=['GET', 'POST'])
 def nodes_page():
