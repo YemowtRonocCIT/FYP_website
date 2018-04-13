@@ -19,6 +19,7 @@
                     <th>Node ID</th>
                     <th>Sigfox ID</th>
                     <th>Is Enabled</th>
+                    <th>Change status</th>
                     <th>Remove Node</th>
                 </thead>
             {% for node in nodes %}
@@ -30,6 +31,11 @@
                         </a>
                     </td>
                     <td>{{ node.active }}</td>
+                    <td>
+                        <a href="/node_status/{{ node.sigfox_id }}">
+                            Enable/Disable
+                        </a>
+                    </td>
                     <td>
                         <a href="/remove_node/{{ node.sigfox_id }}" style="color:red">
                             Remove node
