@@ -24,6 +24,11 @@
                         </a>
                     </td>
                     <td>{{ node.active }}</td>
+                    <td>
+                        <a href="/remove_node/{{ node.sigfox_id }}" style="color:red">
+                            Remove node
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </table>
