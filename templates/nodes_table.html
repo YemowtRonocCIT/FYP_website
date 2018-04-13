@@ -18,7 +18,11 @@
             {% for node in nodes %}
                 <tr>
                     <td>{{ node.node_id }}</td>
-                    <td>{{ node.sigfox_id }}</td>
+                    <td>
+                        <a href="/node/{{ node.sigfox_id }}">
+                            {{ node.sigfox_id }}
+                        </a>
+                    </td>
                     <td>{{ node.active }}</td>
                 </tr>
             {% endfor %}
