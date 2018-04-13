@@ -10,6 +10,7 @@
                     <th>Location ID</th>
                     <th>Location Name</th>
                     <th>Location Type</th>
+                    <th>Remove Location</th>
                 </thead>
             {% for location in locations %}
                 <tr>
@@ -20,6 +21,11 @@
                         </a>
                     </td>
                     <td>{{ location.location_type }}</td>
+                    <td>
+                        <a href="/remove_location/{{ location.location_id }}" style="color:red">
+                            Remove Location
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </table>

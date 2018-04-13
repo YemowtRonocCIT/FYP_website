@@ -16,6 +16,7 @@ LOCATION_SUFFIX = '/location/'
 BUOY_SUFFIX = '/buoy/'
 REMOVE_BUOY_SUFFIX = '/remove_buoy/'
 REMOVE_NODE_SUFFIX = '/remove_node/'
+REMOVE_LOCATION_SUFFIX = '/remove_location/'
 NODE_STATUS_SUFFIX = '/node_status/'
 LAST_MESSAGE_SUFFIX = '/last_message/'
 
@@ -145,6 +146,12 @@ def change_node_status(sigfox_id):
     url = "%s%s%s%s/" % (HTTP_PREFIX, API_IP_ADDRESS, NODE_SUFFIX, sigfox_id)
     requests.patch(url)
     return nodes_page()
+
+@app.route(REMOVE_LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
+def remove_location(location_id):
+    url = "%s%s%s%s/" % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX, location_id)
+    requests.delete(url)
+    return locations_page()
 
 if __name__ == '__main__':
     app.run(host=HOST_IP_ADDRESS)
