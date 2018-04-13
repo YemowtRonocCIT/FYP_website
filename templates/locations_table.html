@@ -6,6 +6,11 @@
     <body>
         {% if locations %}
             <table>
+                <thead>
+                    <th>Location ID</th>
+                    <th>Location Name</th>
+                    <th>Location Type</th>
+                </thead>
             {% for location in locations %}
                 <tr>
                     <td>{{ location.location_id }}</td>
