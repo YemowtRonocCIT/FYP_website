@@ -3,6 +3,8 @@ import json
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import redirect
+from flask import url_for
 
 from login_details import GMAPS_API_KEY
 
@@ -134,26 +136,26 @@ def remove_buoy(buoy_id):
     url = "%s%s%s" % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
     url += '%s/' % (buoy_id, )
     requests.delete(url)
-    return buoys_page()
+    return redirect(url_for('buoys_page'))
 
 @app.route(REMOVE_NODE_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def remove_node(sigfox_id):
     url = "%s%s%s" % (HTTP_PREFIX, API_IP_ADDRESS, NODE_SUFFIX)
     url += "%s/" % (sigfox_id, )
     requests.delete(url)
-    return nodes_page()
+    return redirect(url_for('nodes_page'))
 
 @app.route(NODE_STATUS_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def change_node_status(sigfox_id):
     url = "%s%s%s%s/" % (HTTP_PREFIX, API_IP_ADDRESS, NODE_SUFFIX, sigfox_id)
     requests.patch(url)
-    return nodes_page()
+    return redirect(url_for('nodes_page'))
 
 @app.route(REMOVE_LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
 def remove_location(location_id):
     url = "%s%s%s%s/" % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX, location_id)
     requests.delete(url)
-    return locations_page()
+    return redirect(url_for('locations_page'))
 
 if __name__ == '__main__':
     app.run(host=HOST_IP_ADDRESS)
