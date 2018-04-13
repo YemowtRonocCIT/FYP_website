@@ -1,0 +1,36 @@
+<html>
+    <head>
+        {% if title %}
+            <title>{{ title }}</title>
+        {% else %}
+            <title>Last Messages</title>
+        {% endif %}
+    </head>
+
+    <body>
+        {% if last_messages %}
+            <table>
+                <thead>
+                    <th>Node ID</th>
+                    <th>Temperature Sensed</th>
+                    <th>Temperature (Celsius)</th>
+                    <th>Vibration Sensed</th>
+                    <th>Vibration Value</th>
+                    <th>Time</th>
+                    <th>Button Pressed</th>
+                </thead>
+                {% for message in last_messages %}
+                    <td>{{ message.node_id }}</td>
+                    <td>{{ message.temperature_sensed }}</td>
+                    <td>{{ message.temperature_value }}</td>
+                    <td>{{ message.vibration_sensed }}</td>
+                    <td>{{ message.vibration_value }}</td>
+                    <td>{{ message.time }}</td>
+                    <td>{{ message.button_pressed }}</td>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h3>No last messages found...</h3>
+        {% endif %}
+    </body>
+</html>

@@ -15,9 +15,11 @@ NODE_SUFFIX = '/node/'
 LOCATION_SUFFIX = '/location/'
 BUOY_SUFFIX = '/buoy/'
 REMOVE_BUOY_SUFFIX = '/remove_buoy/'
+LAST_MESSAGE_SUFFIX = '/last_message/'
 
 LOCATION_ID = '<location_id>/'
 BUOY_ID = '<buoy_id>/'
+SIGFOX_ID = '<sigfox_id>/'
 
 HTTP_PREFIX = 'http://'
 
@@ -61,6 +63,15 @@ def nodes_page():
     return render_template('nodes_table.html', nodes=nodes, 
                         host_ip=HOST_IP_ADDRESS, buoys=buoys, 
                         gmaps_api_key=GMAPS_API_KEY)
+
+@app.route(NODE_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
+def node_last_message_page(sigfox_id):
+    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, LAST_MESSAGE_SUFFIX)
+    url += '%s/' % (sigfox_id, )
+    response = requests.get(url)
+    last_message = json.loads(response.text) 
+
+    return render_template('last_message.html', last_messages=last_message, host_ip=HOST_IP_ADDRESS)
 
 @app.route(LOCATION_SUFFIX, methods=['GET', 'POST'])
 def locations_page():
