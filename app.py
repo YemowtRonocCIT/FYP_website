@@ -48,19 +48,8 @@ LOCATION_TYPES = ['URBAN', 'SUBURBAN', 'RURAL', 'BEACH', 'QUAY', 'RIVER']
 def index_page():
     return render_template('index.html')
 
-@app.route(NODE_SUFFIX, methods=['GET', 'POST'])
+@app.route(NODE_SUFFIX, methods=['GET'])
 def nodes_page():
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, NODE_SUFFIX)
-    if request.method == 'POST':
-        sigfox_id = request.form.get(SIGFOX_ID_KEY)
-        data = {SIGFOX_ID_KEY: sigfox_id}
-
-        buoy_id = request.form.get(BUOY_ID_KEY)
-        if buoy_id is not None and buoy_id.lower() != 'none':
-            data[BUOY_ID_KEY] = buoy_id
-
-        requests.post(url, data)
-    
     nodes = API.get_data(NODE_SUFFIX)
     buoys = API.get_data(BUOY_SUFFIX)
 
@@ -68,26 +57,41 @@ def nodes_page():
                         host_ip=HOST_IP_ADDRESS, buoys=buoys, 
                         gmaps_api_key=GMAPS_API_KEY)
 
+@app.route(NODE_SUFFIX, methods=['POST'])
+def add_node():
+    sigfox_id = request.form.get(SIGFOX_ID_KEY)
+    data = {SIGFOX_ID_KEY: sigfox_id}
+
+    buoy_id = request.form.get(BUOY_ID_KEY)
+    if buoy_id is not None and buoy_id.lower() != 'none':
+        data[BUOY_ID_KEY] = buoy_id
+
+    API.post_form(NODE_SUFFIX, data)
+    return redirect(url_for('nodes_page'))
+
 @app.route(NODE_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def node_last_message_page(sigfox_id):
     last_message = API.get_specific_data(LAST_MESSAGE_SUFFIX, sigfox_id)
     return render_template('last_message.html', last_messages=last_message, host_ip=HOST_IP_ADDRESS)
 
-@app.route(LOCATION_SUFFIX, methods=['GET', 'POST'])
+@app.route(LOCATION_SUFFIX, methods=['GET'])
 def locations_page():
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX)
-    if request.method == 'POST':
-        location_name = request.form.get(LOCATION_NAME_KEY)
-        location_type = request.form.get(LOCATION_TYPE_KEY)
-        data = {
-            LOCATION_NAME_KEY: location_name,
-            LOCATION_TYPE_KEY: location_type
-        }
-        requests.post(url, data)
-    
     data = API.get_data(LOCATION_SUFFIX)
     return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS,
                                                 location_types=LOCATION_TYPES)
+
+@app.route(LOCATION_SUFFIX, methods=['POST'])
+def add_location():
+    location_name = request.form.get(LOCATION_NAME_KEY)
+    location_type = request.form.get(LOCATION_TYPE_KEY)
+    data = {
+        LOCATION_NAME_KEY: location_name,
+         LOCATION_TYPE_KEY: location_type
+    }
+    API.post_form(LOCATION_SUFFIX, data)
+
+    return redirect(url_for('locations_page'))
+
 
 @app.route(LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
 def buoys_by_location_page(location_id):
@@ -100,26 +104,28 @@ def buoys_by_location_page(location_id):
     return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, title=title)
 
 
-@app.route(BUOY_SUFFIX, methods=['GET', 'POST'])
+@app.route(BUOY_SUFFIX, methods=['GET'])
 def buoys_page():
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
-    if request.method == 'POST':
-        buoy_location = request.form.get(BUOY_LOCATION_KEY)
-        buoy_latitude = request.form.get(LATITUDE_KEY)
-        buoy_longitude = request.form.get(LONGITUDE_KEY)
-        at_location = request.form.get(AT_LOCATION_KEY)
-        data = {
-            BUOY_LOCATION_KEY: buoy_location,
-            LATITUDE_KEY: buoy_latitude,
-            LONGITUDE_KEY: buoy_longitude,
-            AT_LOCATION_KEY: at_location
-        }
-
-        requests.post(url, data)
-    
     data = API.get_data(BUOY_SUFFIX)
     locations = API.get_data(LOCATION_SUFFIX)
     return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, locations=locations)
+
+@app.route(BUOY_SUFFIX, methods=['POST'])
+def add_buoy():
+    buoy_location = request.form.get(BUOY_LOCATION_KEY)
+    buoy_latitude = request.form.get(LATITUDE_KEY)
+    buoy_longitude = request.form.get(LONGITUDE_KEY)
+    at_location = request.form.get(AT_LOCATION_KEY)
+    data = {
+        BUOY_LOCATION_KEY: buoy_location,
+        LATITUDE_KEY: buoy_latitude,
+        LONGITUDE_KEY: buoy_longitude,
+        AT_LOCATION_KEY: at_location
+    }
+
+    API.post_form(BUOY_SUFFIX, data)
+
+    return redirect(url_for('buoys_page'))
 
 @app.route(REMOVE_BUOY_SUFFIX + BUOY_ID, methods=['GET'])
 def remove_buoy(buoy_id):
