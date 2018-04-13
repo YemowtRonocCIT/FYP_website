@@ -30,6 +30,17 @@ class ApiHandler(object):
         response = requests.get(url)
         data = json.loads(response.text)
         return data
+    
+    def post_form(self, url_suffix, data):
+        """
+        Sends POST form with given data to API server with the given URL suffix
+
+        url_suffix (str): Suffix to specify where to send form
+        data (dict): Data to be used in form by API server
+        """
+        url = self.base_url % (url_suffix)
+        response = requests.post(url, data)
+        return response.ok
 
     def get_specific_data(self, url_suffix, identifier):
         """
