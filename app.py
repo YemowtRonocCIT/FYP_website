@@ -6,9 +6,12 @@ from flask import request
 from flask import redirect
 from flask import url_for
 
+from handler.api_handler import ApiHandler
+
 from login_details import GMAPS_API_KEY
 
 app = Flask(__name__)
+API = ApiHandler()
 
 API_IP_ADDRESS = '127.0.0.1:5000'
 HOST_IP_ADDRESS = '192.168.153.1'
@@ -58,12 +61,8 @@ def nodes_page():
 
         requests.post(url, data)
     
-    response = requests.get(url)
-    nodes = json.loads(response.text)
-
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
-    response = requests.get(url)
-    buoys = json.loads(response.text)
+    nodes = API.get_data(NODE_SUFFIX)
+    buoys = API.get_data(BUOY_SUFFIX)
 
     return render_template('nodes_table.html', nodes=nodes, 
                         host_ip=HOST_IP_ADDRESS, buoys=buoys, 
@@ -71,11 +70,7 @@ def nodes_page():
 
 @app.route(NODE_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def node_last_message_page(sigfox_id):
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, LAST_MESSAGE_SUFFIX)
-    url += '%s/' % (sigfox_id, )
-    response = requests.get(url)
-    last_message = json.loads(response.text) 
-
+    last_message = API.get_specific_data(LAST_MESSAGE_SUFFIX, sigfox_id)
     return render_template('last_message.html', last_messages=last_message, host_ip=HOST_IP_ADDRESS)
 
 @app.route(LOCATION_SUFFIX, methods=['GET', 'POST'])
@@ -90,20 +85,18 @@ def locations_page():
         }
         requests.post(url, data)
     
-    response = requests.get(url)
-    data = json.loads(response.text)
+    data = API.get_data(LOCATION_SUFFIX)
     return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS,
                                                 location_types=LOCATION_TYPES)
 
 @app.route(LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
 def buoys_by_location_page(location_id):
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
-    url += '%s/' % (location_id, )
     title = "Locations Page"
-    response = requests.get(url)
-    data = json.loads(response.text)
+
+    data = API.get_specific_data(BUOY_SUFFIX, location_id)
     if len(data) > 0:
         title = "Buoys at %s" % (data[0]['location_name'], )
+
     return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, title=title)
 
 
@@ -124,25 +117,18 @@ def buoys_page():
 
         requests.post(url, data)
     
-    response = requests.get(url)
-    data = json.loads(response.text)
-    url = '%s%s%s' % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX)
-    response = requests.get(url)
-    locations = json.loads(response.text)
+    data = API.get_data(BUOY_SUFFIX)
+    locations = API.get_data(LOCATION_SUFFIX)
     return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, locations=locations)
 
 @app.route(REMOVE_BUOY_SUFFIX + BUOY_ID, methods=['GET'])
 def remove_buoy(buoy_id):
-    url = "%s%s%s" % (HTTP_PREFIX, API_IP_ADDRESS, BUOY_SUFFIX)
-    url += '%s/' % (buoy_id, )
-    requests.delete(url)
+    API.remove_element(BUOY_SUFFIX, buoy_id)
     return redirect(url_for('buoys_page'))
 
 @app.route(REMOVE_NODE_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def remove_node(sigfox_id):
-    url = "%s%s%s" % (HTTP_PREFIX, API_IP_ADDRESS, NODE_SUFFIX)
-    url += "%s/" % (sigfox_id, )
-    requests.delete(url)
+    API.remove_element(NODE_SUFFIX, sigfox_id)
     return redirect(url_for('nodes_page'))
 
 @app.route(NODE_STATUS_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
@@ -153,8 +139,7 @@ def change_node_status(sigfox_id):
 
 @app.route(REMOVE_LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
 def remove_location(location_id):
-    url = "%s%s%s%s/" % (HTTP_PREFIX, API_IP_ADDRESS, LOCATION_SUFFIX, location_id)
-    requests.delete(url)
+    API.remove_element(LOCATION_SUFFIX, location_id)
     return redirect(url_for('locations_page'))
 
 if __name__ == '__main__':
