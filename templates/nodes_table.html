@@ -15,6 +15,12 @@
 
         {% if nodes %}
             <table>
+                <thead>
+                    <th>Node ID</th>
+                    <th>Sigfox ID</th>
+                    <th>Is Enabled</th>
+                    <th>Remove Node</th>
+                </thead>
             {% for node in nodes %}
                 <tr>
                     <td>{{ node.node_id }}</td>
@@ -39,6 +45,12 @@
 
         {% if buoys %}
             <table>
+                <thead>
+                    <th>Buoy ID</th>
+                    <th>Location</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </thead>
             {% for buoy in buoys %}
                 <tr>
                     <td>{{ buoy.buoy_id }}</td>
