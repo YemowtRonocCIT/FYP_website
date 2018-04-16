@@ -19,7 +19,7 @@ h3:active {
     background: black;
 }
 
-a { 
+h3 a { 
     text-decoration:none;
     color:white;
 }
