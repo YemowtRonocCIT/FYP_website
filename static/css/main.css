@@ -1,7 +1,31 @@
+body {
+    margin:0;
+}
+
 h3 {
-    width: 24%;
+    width: 20%;
     display: inline-block;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+    margin: 1%;
+    padding: 1%;
     text-align:center;
+    background: #1A1A1A;
+}
+
+h3:hover {
+    background:grey;
+}
+
+h3:active {
+    background: black;
+}
+
+a { 
+    text-decoration:none;
+    color:white;
+}
+
+header {
+    background:#0F0F0F;
+    margin:auto;
+    padding:auto;
 }
