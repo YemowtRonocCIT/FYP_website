@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ location.location_id }}</td>
                     <td>
-                        <a href="http://{{ host_ip }}:5000/location/{{ location.location_id }}">
+                        <a href="/location/{{ location.location_id }}">
                             {{ location.location_name }}
                         </a>
                     </td>
@@ -44,11 +44,7 @@
 
         <h1>Add location below</h1>
 
-        {% if host_ip %}
-        <form action="http://{{ host_ip }}:5000/location/" method="POST">
-        {% else %}
-        <form action="http://127.0.0.1:5000/location/" method="POST">
-        {% endif %}
+        <form action="/location/" method="POST">
             <p>Location Name: 
                 <input type="text" name="location_name" id="location_name">
             </p>
