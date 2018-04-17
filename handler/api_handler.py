@@ -77,3 +77,4 @@ class ApiHandler(object):
         url += "%s/" % (identifier, )
         response = requests.delete(url)
         return response.ok
+        

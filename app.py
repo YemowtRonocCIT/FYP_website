@@ -25,6 +25,7 @@ REMOVE_LOCATION_SUFFIX = '/remove_location/'
 NODE_STATUS_SUFFIX = '/node_status/'
 LAST_MESSAGE_SUFFIX = '/last_message/'
 UPDATE_BUOY_SUFFIX = '/update_buoy/'
+CHANGE_LOCATION_SUFFIX = '/change_location/'
 
 LOCATION_ID = '<location_id>/'
 BUOY_ID = '<buoy_id>/'
@@ -85,10 +86,13 @@ def locations_page():
 def add_location():
     location_name = request.form.get(LOCATION_NAME_KEY)
     location_type = request.form.get(LOCATION_TYPE_KEY)
+    location_id = request.form.get(LOCATION_ID_KEY)
     data = {
         LOCATION_NAME_KEY: location_name,
-         LOCATION_TYPE_KEY: location_type
+        LOCATION_TYPE_KEY: location_type,
+        LOCATION_ID_KEY: location_id
     }
+    
     API.post_form(LOCATION_SUFFIX, data)
 
     return redirect(url_for('locations_page'))
@@ -152,6 +156,10 @@ def remove_location(location_id):
 def update_buoy_time_checked(buoy_id):
     API.patch(BUOY_SUFFIX, buoy_id)
     return redirect(url_for('buoys_page'))
+
+@app.route(CHANGE_LOCATION_SUFFIX + LOCATION_ID, methods=['GET', 'POST'])
+def change_location(location_id):
+    return render_template('edit_location.html', location_id=location_id, location_types=LOCATION_TYPES)
 
 if __name__ == '__main__':
     app.run(host=HOST_IP_ADDRESS)

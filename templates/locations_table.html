@@ -13,6 +13,7 @@
                     <th>Location Name</th>
                     <th>Location Type</th>
                     <th>Remove Location</th>
+                    <th>Change Details</th>
                 </thead>
             {% for location in locations %}
                 <tr>
@@ -26,6 +27,11 @@
                     <td>
                         <a href="/remove_location/{{ location.location_id }}" style="color:red">
                             Remove Location
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/change_location/{{ location.location_id }}">
+                            Change Details
                         </a>
                     </td>
                 </tr>
