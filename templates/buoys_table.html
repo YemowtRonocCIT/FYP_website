@@ -71,9 +71,6 @@
                     {% endfor %}
                 </select>   
             </p>
-        {% else %}
-            <input type="hidden" name="buoy_location" id="buoy_location" value="Cork City">
-        {% endif %}
 
             <p>Is the Buoy at the location? : 
                 <select name="at_location" id="at_location">
@@ -91,6 +88,9 @@
             </p>
 
             <input type="submit">
+        {% else %}
+            <p>There are currently no <a href="/location/">locations</a>.</p>
+        {% endif %}
         </form>
     </body>
 </html>
