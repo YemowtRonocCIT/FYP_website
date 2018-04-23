@@ -3,29 +3,29 @@ body {
 }
 
 h3 {
-    width: 20%;
     display: inline-block;
     margin: 1%;
     padding: 1%;
     text-align:center;
-    background: #1A1A1A;
+    background: #FCFCFC;
+    border: 1px solid black;
 }
 
 h3:hover {
-    background:grey;
+    background:white;
 }
 
 h3:active {
-    background: black;
+    background: grey;
 }
 
-h3 a { 
+a h3 { 
     text-decoration:none;
-    color:white;
+    color:black;
 }
 
 header {
-    background:#0F0F0F;
+    background:#FAFAFA;
     margin:auto;
     padding:auto;
 }
