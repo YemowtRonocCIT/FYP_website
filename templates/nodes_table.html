@@ -78,17 +78,17 @@
             <p>Sigfox ID: 
                 <input type="text" name="sigfox_id" id="sigfox_id">
             </p>
-
-            <p>Buoy:
-                {% if buoys %}
-                <select name="buoy_id" id="buoy_id">
-                    <option value="None">None</option>
-                    {% for buoy in buoys %}
-                        <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
-                    {% endfor %}
-                </select>
-                {% endif %}
-            </p>
+            
+            {% if buoys %}
+                <p>Buoy:
+                    <select name="buoy_id" id="buoy_id">
+                        <option value="None">None</option>
+                        {% for buoy in buoys %}
+                            <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
+                        {% endfor %}
+                    </select>
+                </p>
+            {% endif %}
 
             <input type="submit">
         </form>
