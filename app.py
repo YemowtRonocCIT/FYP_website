@@ -56,8 +56,7 @@ def nodes_page():
     buoys = API.get_data(BUOY_SUFFIX)
 
     return render_template('nodes_table.html', nodes=nodes, 
-                        host_ip=HOST_IP_ADDRESS, buoys=buoys, 
-                        gmaps_api_key=GMAPS_API_KEY)
+                        buoys=buoys, gmaps_api_key=GMAPS_API_KEY)
 
 @app.route(NODE_SUFFIX, methods=['POST'])
 def add_node():
@@ -74,12 +73,12 @@ def add_node():
 @app.route(NODE_SUFFIX + SIGFOX_ID, methods=['GET', 'POST'])
 def node_last_message_page(sigfox_id):
     last_message = API.get_specific_data(LAST_MESSAGE_SUFFIX, sigfox_id)
-    return render_template('last_message.html', last_messages=last_message, host_ip=HOST_IP_ADDRESS)
+    return render_template('last_message.html', last_messages=last_message)
 
 @app.route(LOCATION_SUFFIX, methods=['GET'])
 def locations_page():
     data = API.get_data(LOCATION_SUFFIX)
-    return render_template('locations_table.html', locations=data, host_ip=HOST_IP_ADDRESS,
+    return render_template('locations_table.html', locations=data,
                                                 location_types=LOCATION_TYPES)
 
 @app.route(LOCATION_SUFFIX, methods=['POST'])
@@ -106,14 +105,14 @@ def buoys_by_location_page(location_id):
     if len(data) > 0:
         title = "Buoys at %s" % (data[0]['location_name'], )
 
-    return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, title=title)
+    return render_template('buoys_table.html', buoys=data, title=title)
 
 
 @app.route(BUOY_SUFFIX, methods=['GET'])
 def buoys_page():
     data = API.get_data(BUOY_SUFFIX)
     locations = API.get_data(LOCATION_SUFFIX)
-    return render_template('buoys_table.html', buoys=data, host_ip=HOST_IP_ADDRESS, locations=locations)
+    return render_template('buoys_table.html', buoys=data, locations=locations)
 
 @app.route(BUOY_SUFFIX, methods=['POST'])
 def add_buoy():
