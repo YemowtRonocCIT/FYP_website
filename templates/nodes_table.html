@@ -6,91 +6,54 @@
 
     <body>
         {% include 'header.html' %}
+        <main>
 
-        <iframe
-            width="80%"
-            height="80%"
-            frameborder="0" style="border:0"
-            src="https://www.google.com/maps/embed/v1/place?key={{ gmaps_api_key }}
-            &q=Cork" allowfullscreen>
-        </iframe>
+            <iframe
+                width="80%"
+                height="80%"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key={{ gmaps_api_key }}
+                &q=Cork" allowfullscreen>
+            </iframe>
 
-        {% if nodes %}
-            <table>
-                <thead>
-                    <th>Node ID</th>
-                    <th>Sigfox ID</th>
-                    <th>Is Enabled</th>
-                    <th>Change status</th>
-                    <th>Remove Node</th>
-                </thead>
-            {% for node in nodes %}
-                <tr>
-                    <td>{{ node.node_id }}</td>
-                    <td>
-                        <a href="/node/{{ node.sigfox_id }}">
-                            {{ node.sigfox_id }}
-                        </a>
-                    </td>
-                    <td>{{ node.active }}</td>
-                    <td>
-                        <a href="/node_status/{{ node.sigfox_id }}">
-                            Enable/Disable
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/remove_node/{{ node.sigfox_id }}" style="color:red">
-                            Remove node
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </table>
+            {% if nodes %}
+                {% for node in nodes %}
+                    <div class="info-card" id="{{ node.location_name }}{{ node.node_id }}">
+                        <h2>{{ node.node_id }}: 
+                            <a href="/node/{{ node.sigfox_id }}">{{ node.sigfox_id }}</a>    
+                        </h2>
+                        <p>Active:
+                            <a href="/node_status/{{ node.sigfox_id }}">
+                                {{ node.active }}
+                            </a>
+                        </p>
+                        <p><a class="remove" href="/remove_node/{{ node.sigfox_id }}">Remove</a></p>
+                    </div>
+                {% endfor %}
 
-        {% else %}
-            <p>No nodes...</p>
-        {% endif %}
-
-        {% if buoys %}
-            <table>
-                <thead>
-                    <th>Buoy ID</th>
-                    <th>Location</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                </thead>
-            {% for buoy in buoys %}
-                <tr>
-                    <td>{{ buoy.buoy_id }}</td>
-                    <td>{{ buoy.location_name }}</td>
-                    <td>{{ buoy.latitude }}</td>
-                    <td>{{ buoy.longitude }}</td>
-                </tr>
-            {% endfor %}
-            </table>
-
-        {% else %}
-            <p>No buoys...</p>
-        {% endif %}
-
-        <h1>Add node below</h1>
-        <form action="/node/" method="POST">
-            <p>Sigfox ID: 
-                <input type="text" name="sigfox_id" id="sigfox_id">
-            </p>
-            
-            {% if buoys %}
-                <p>Buoy:
-                    <select name="buoy_id" id="buoy_id">
-                        <option value="None">None</option>
-                        {% for buoy in buoys %}
-                            <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
-                        {% endfor %}
-                    </select>
-                </p>
+            {% else %}
+                <p>No nodes...</p>
             {% endif %}
 
-            <input type="submit">
-        </form>
+            <h1>Add node below</h1>
+            <form action="/node/" method="POST">
+                <p>Sigfox ID: 
+                    <input type="text" name="sigfox_id" id="sigfox_id">
+                </p>
+                
+                {% if buoys %}
+                    <p>Buoy:
+                        <select name="buoy_id" id="buoy_id">
+                            <option value="None">None</option>
+                            {% for buoy in buoys %}
+                                <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </p>
+                {% endif %}
+
+                <input type="submit">
+            </form>
+        </main>
     </body>
 </html>

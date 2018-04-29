@@ -11,7 +11,7 @@
     <body>
         {% include 'header.html' %}
         {% if last_messages %}
-            <table>
+            <!-- <table>
                 <thead>
                     <th>Node ID</th>
                     <th>Temperature Sensed</th>
@@ -20,17 +20,33 @@
                     <th>Vibration Value</th>
                     <th>Time</th>
                     <th>Button Pressed</th>
-                </thead>
+                </thead> -->
                 {% for message in last_messages %}
-                    <td>{{ message.node_id }}</td>
+                    <div class="info-card" id="{{ message.node_id }}">
+                        <h2>{{ message.node_id }}: {{message.button_pressed }}</h2>
+                        <p>Temperature Sensed:
+                            {{ message.temperature_sensed }},
+                            {{ message.temperature_value }}
+                        </p>
+                        <p>
+                            Vibration Sensed:
+                            {{ message.vibration_sensed }},
+                            {{ message.vibration_value }}
+                        </p>
+                        <p>
+                            Time Sent:
+                            {{ message.time }}
+                        </p>
+                    </div>
+                    <!-- <td>{{ message.message_id }}</td>
                     <td>{{ message.temperature_sensed }}</td>
                     <td>{{ message.temperature_value }}</td>
                     <td>{{ message.vibration_sensed }}</td>
                     <td>{{ message.vibration_value }}</td>
                     <td>{{ message.time }}</td>
-                    <td>{{ message.button_pressed }}</td>
+                    <td>{{ message.button_pressed }}</td> -->
                 {% endfor %}
-            </table>
+            <!-- </table> -->
         {% else %}
             <h3>No last messages found...</h3>
         {% endif %}

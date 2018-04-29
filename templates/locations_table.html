@@ -6,62 +6,45 @@
 
     <body>
         {% include 'header.html' %}
-        {% if locations %}
-            <table>
-                <thead>
-                    <th>Location ID</th>
-                    <th>Location Name</th>
-                    <th>Location Type</th>
-                    <th>Remove Location</th>
-                    <th>Change Details</th>
-                </thead>
-            {% for location in locations %}
-                <tr>
-                    <td>{{ location.location_id }}</td>
-                    <td>
-                        <a href="/location/{{ location.location_id }}">
-                            {{ location.location_name }}
-                        </a>
-                    </td>
-                    <td>{{ location.location_type }}</td>
-                    <td>
-                        <a href="/remove_location/{{ location.location_id }}" style="color:red">
-                            Remove Location
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/change_location/{{ location.location_id }}">
-                            Change Details
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </table>
 
-        {% else %}
-            <p>No locations...</p>
-        {% endif %}
+        <main>
+            {% if locations %}
 
-        <h1>Add location below</h1>
+                {% for location in locations %}
+                    <div class="info-card" id="{{ location.location_name }}{{ location.location_id }}">
+                        <h2>{{ location.location_id }}: {{ location.location_name }}</h2>
+                        <p><a href="/change_location/{{ location.location_id }}">Edit</a></p>
+                        <p>Type: {{ location.location_type }}</p>
+                        <p><a class="remove" href="/remove_location/{{ location.location_id }}">Remove</a></p>
+                        <a href="/location/{{ location.location_id }}">Buoys</a></p>
+                    </div>
+                {% endfor %}
 
-        <form action="/location/" method="POST">
-            <p>Location Name: 
-                <input type="text" name="location_name" id="location_name">
-            </p>
+            {% else %}
+                <p>No locations...</p>
+            {% endif %}
 
-            <p>Location Type: 
-                {% if location_types %}
-                    <select name="location_type" id="location_type">
-                        {% for type in location_types %}
-                            <option value="{{ type }}">{{ type }}</option>
-                        {% endfor %}
-                    </select>
-                {% else %}
-                        <input type="text" name="location_type" id="location_type">
-                {% endif %}
-            </p>
+            <h1>Add location below</h1>
 
-            <input type="submit">
-        </form>
+            <form action="/location/" method="POST">
+                <p>Location Name: 
+                    <input type="text" name="location_name" id="location_name">
+                </p>
+
+                <p>Location Type: 
+                    {% if location_types %}
+                        <select name="location_type" id="location_type">
+                            {% for type in location_types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    {% else %}
+                            <input type="text" name="location_type" id="location_type">
+                    {% endif %}
+                </p>
+
+                <input type="submit">
+            </form>
+        </main>
     </body>
 </html>

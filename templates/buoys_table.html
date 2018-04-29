@@ -10,82 +10,63 @@
 
     <body>
         {% include 'header.html' %}
-        {% if buoys %}
-            <table>
-                <thead>
-                    <th>Buoy ID</th>
-                    <th>At Location</th>
-                    <th>Time Checked</th>
-                    <th>Location</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>Google Maps</th>
-                    <th>Remove Buoy</th>
-                    <th>Checked now</th>
-                </thead>
-            {% for buoy in buoys %}
-                <tr>
-                    <td>{{ buoy.buoy_id }}</td>
-                    <td>{{ buoy.at_location }}</td>
-                    <td>{{ buoy.time_checked }}</td>
-                    <td>{{ buoy.location_name }}</td>
-                    <td>{{ buoy.latitude }}</td>
-                    <td>{{ buoy.longitude }}</td>
-                    <td>
-                        <a href="http://www.google.com/maps/place/{{ buoy.latitude }},{{ buoy.longitude }}" 
+        <main>
+            {% if buoys %}
+                {% for buoy in buoys %}
+                    <div class="info-card" id="{{ buoy.location_name }}{{ buoy.buoy_id }}">
+                        <h2>{{ buoy.buoy_id }}: {{ buoy.location_name }}</h2>
+                        <p>{{ buoy.latitude }}, {{ buoy.longitude }}:
+                            <a href="http://www.google.com/maps/place/{{ buoy.latitude }},{{ buoy.longitude }}"
                             target="_blank">
-                            Google Maps
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/remove_buoy/{{ buoy.buoy_id }}" style="color:red">
-                            Remove Buoy
-                        </a>
-                    </td>
-                    <td>
-                        <a href="/update_buoy/{{ buoy.buoy_id }}">
-                            Checked
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </table>
+                                View On Map
+                            </a>
+                        </p>
+                        <p>
+                            <a href="/update_buoy/{{ buoy.buoy_id }}">
+                                Checked:
+                            </a> 
+                            {{ buoy.time_checked }}
+                        </p>
+                        <p><a class="remove" href="/remove_buoy/{{ buoy.buoy_id }}">Remove</a></p>
+                    </div>
+                {% endfor %}
 
-        {% else %}
-            <p>No buoys...</p>
-        {% endif %}
-
-        <h1>Add buoy below</h1>
-
-        <form action="/buoy/" method="POST">            
-            {% if locations %}
-                <p>Location Name: 
-                    <select name="buoy_location" id="buoy_location">
-                        {% for location in locations %}
-                            <option value="{{ location.location_name }}">{{ location.location_name }}</option>
-                        {% endfor %}
-                    </select>   
-                </p>
-
-                <p>Is the Buoy at the location? : 
-                    <select name="at_location" id="at_location">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </p>
-
-                <p>Latitude: 
-                    <input type="number" step="any" name="latitude" id="latitude">
-                </p>
-
-                <p>Longitude: 
-                    <input type="number" step="any" name="longitude" id="longitude">
-                </p>
-
-                <input type="submit">
             {% else %}
-                <p>There are currently no <a href="/location/">locations</a>.</p>
+                <p>No buoys...</p>
             {% endif %}
-        </form>
+
+            <h1>Add buoy below</h1>
+
+            <form action="/buoy/" method="POST">            
+                {% if locations %}
+                    <p>Location Name: 
+                        <select name="buoy_location" id="buoy_location">
+                            {% for location in locations %}
+                                <option value="{{ location.location_name }}">{{ location.location_name }}</option>
+                            {% endfor %}
+                        </select>   
+                    </p>
+
+                    <p>Is the Buoy at the location? : 
+                        <select name="at_location" id="at_location">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </p>
+
+                    <p>Latitude: 
+                        <input type="number" step="any" name="latitude" id="latitude">
+                    </p>
+
+                    <p>Longitude: 
+                        <input type="number" step="any" name="longitude" id="longitude">
+                    </p>
+
+                    <input type="submit">
+                {% else %}
+                    <p>There are currently no <a href="/location/">locations</a>.</p>
+                {% endif %}
+            </form>
+        </main>
     </body>
 </html>

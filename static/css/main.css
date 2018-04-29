@@ -2,6 +2,10 @@ body {
     margin:0;
 }
 
+main {
+    margin:1%;
+}
+
 h3 {
     display: inline-block;
     margin: 1%;
@@ -28,4 +32,17 @@ header {
     background:#FAFAFA;
     margin:auto;
     padding:auto;
+}
+
+.info-card {
+    width:20%;
+    border:1px solid grey;
+    display:inline-block;
+    padding:1%;
+    margin-bottom:1%;
+    box-shadow: 2px 2px 5px grey;
+}
+
+.remove {
+    color:red;
 }
