@@ -11,12 +11,12 @@ h3 {
     margin: 1%;
     padding: 1%;
     text-align:center;
-    background: #FCFCFC;
     border: 1px solid black;
 }
 
 h3:hover {
     background:white;
+    box-shadow: 2px 2px 5px grey;
 }
 
 h3:active {
@@ -29,9 +29,10 @@ a h3 {
 }
 
 header {
-    background:#FAFAFA;
+    background:white;
     margin:auto;
     padding:auto;
+    border-bottom:1px solid black;
 }
 
 .info-card {
