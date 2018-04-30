@@ -41,6 +41,9 @@ header {
     display:inline-block;
     padding:1%;
     margin-bottom:1%;
+}
+
+.info-card:hover {
     box-shadow: 2px 2px 5px grey;
 }
 
