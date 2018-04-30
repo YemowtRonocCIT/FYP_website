@@ -13,7 +13,7 @@
         <main>
             {% if buoys %}
                 {% for buoy in buoys %}
-                    <div class="info-card" id="{{ buoy.location_name }}{{ buoy.buoy_id }}">
+                    <div class="info-card {{ buoy.at_location }}" id="{{ buoy.location_name }}{{ buoy.buoy_id }}">
                         <h2>{{ buoy.buoy_id }}: {{ buoy.location_name }}</h2>
                         <p>{{ buoy.latitude }}, {{ buoy.longitude }}:
                             <a href="http://www.google.com/maps/place/{{ buoy.latitude }},{{ buoy.longitude }}"
@@ -27,7 +27,10 @@
                             </a> 
                             {{ buoy.time_checked }}
                         </p>
-                        <p><a class="remove" href="/remove_buoy/{{ buoy.buoy_id }}">Remove</a></p>
+                        <p>At Location: {{ buoy.at_location }} 
+                            <br>
+                            <a class="remove" href="/remove_buoy/{{ buoy.buoy_id }}">Remove</a>
+                        </p>
                     </div>
                 {% endfor %}
 
