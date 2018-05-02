@@ -6,8 +6,16 @@
 
     <body>
         {% include 'header.html' %}
-        <main>
-            
+        <main class="home-page">
+            <h1>Life Buoy Management System</h1>
+            <h2>A simple system to manage life buoys, and nodes which will 
+                automatically detect the movement of life buoys.</h2>
+
+            <img id="home-image" src="{{ url_for('static', filename='images/lifebuoy.png') }}" />
+
+            <form action="/location/" method="GET">
+                <input type="submit" value="Get Started"></input>
+            </form>
         </main>
         {% include 'footer.html' %}
     </body>

@@ -69,3 +69,28 @@ footer {
 .False .remove {
     color:black;
 }
+
+.home-page {
+    background-color:#202020;
+    color:white;
+    margin:0;
+    padding:1%;
+    border-bottom:1px solid white;
+}
+
+.home-page input {
+    background-color:orange;
+    color:white;
+    padding-left:3%;
+    padding-right:3%;
+    padding-top:1%;
+    padding-bottom:1%;
+    border:none;
+    display:block;
+}
+
+#home-image {
+    width:40%;
+    height:40%;
+    margin:5%;
+}
