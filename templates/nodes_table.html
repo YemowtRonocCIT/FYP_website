@@ -9,14 +9,6 @@
         <main>
             <h1>Nodes</h1>
 
-            <iframe
-                width="80%"
-                height="80%"
-                frameborder="0" style="border:0"
-                src="https://www.google.com/maps/embed/v1/place?key={{ gmaps_api_key }}
-                &q=Cork" allowfullscreen>
-            </iframe>
-
             {% if nodes %}
                 {% for node in nodes %}
                     <div class="info-card" id="{{ node.location_name }}{{ node.node_id }}">
@@ -55,6 +47,14 @@
 
                 <input type="submit">
             </form>
+
+            <iframe
+                width="80%"
+                height="80%"
+                frameborder="0" style="border:0"
+                src="https://www.google.com/maps/embed/v1/place?key={{ gmaps_api_key }}
+                &q=Cork" allowfullscreen>
+            </iframe>
         </main>
         {% include 'footer.html' %}
     </body>
