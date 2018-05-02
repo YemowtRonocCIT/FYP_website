@@ -4,6 +4,7 @@ body {
 
 main {
     margin:1%;
+    min-height:100vh;
 }
 
 h3 {
@@ -33,6 +34,14 @@ header {
     margin:auto;
     padding:auto;
     border-bottom:1px solid black;
+}
+
+footer {
+    background-color: #202020;
+    color:white;
+    text-align:center;
+    position:absolute;
+    width:100%;
 }
 
 .info-card {
