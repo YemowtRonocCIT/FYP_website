@@ -20,32 +20,35 @@
                         <a href="/location/{{ location.location_id }}">Buoys</a></p>
                     </div>
                 {% endfor %}
-
             {% else %}
-                <p>No locations...</p>
+                    <p>No locations in system</p>
             {% endif %}
 
-            <h1>Add location below</h1>
+            {% if location_types %}
+                <h1>Add location below</h1>
 
-            <form action="/location/" method="POST">
-                <p>Location Name: 
-                    <input type="text" name="location_name" id="location_name">
-                </p>
+                <form action="/location/" method="POST">
+                    <p>Location Name: 
+                        <input type="text" name="location_name" id="location_name">
+                    </p>
 
-                <p>Location Type: 
-                    {% if location_types %}
+                    <p>Location Type: 
                         <select name="location_type" id="location_type">
                             {% for type in location_types %}
                                 <option value="{{ type }}">{{ type }}</option>
                             {% endfor %}
                         </select>
-                    {% else %}
-                            <input type="text" name="location_type" id="location_type">
-                    {% endif %}
-                </p>
+                    </p>
 
-                <input type="submit">
-            </form>
+                    <input type="submit">
+                </form>
+            {% endif %}
+
+            {% if not locations %}
+                {% if not location_types %}
+                    <h2>No API connection detected</h2>
+                {% endif %}
+            {% endif %}
         </main>
 
         {% include 'footer.html' %}

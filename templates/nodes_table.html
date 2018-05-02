@@ -28,25 +28,29 @@
                 <p>No nodes...</p>
             {% endif %}
 
-            <h1>Add node below</h1>
-            <form action="/node/" method="POST">
-                <p>Sigfox ID: 
-                    <input type="text" name="sigfox_id" id="sigfox_id">
-                </p>
-                
-                {% if buoys %}
-                    <p>Buoy:
-                        <select name="buoy_id" id="buoy_id">
-                            <option value="None">None</option>
-                            {% for buoy in buoys %}
-                                <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
-                            {% endfor %}
-                        </select>
+            {% if buoys %}
+                <h1>Add node below</h1>
+                <form action="/node/" method="POST">
+                    <p>Sigfox ID: 
+                        <input type="text" name="sigfox_id" id="sigfox_id">
                     </p>
-                {% endif %}
+                    
+                        <p>Buoy:
+                            <select name="buoy_id" id="buoy_id">
+                                <option value="None">None</option>
+                                {% for buoy in buoys %}
+                                    <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
 
-                <input type="submit">
-            </form>
+                    <input type="submit">
+                </form>
+            {% else %}
+                <h2>No buoys detected</h2>
+                <p>Create a new buoy <a href="/buoy/">here.</a></p>
+            
+            {% endif %}
 
             <iframe
                 width="80%"

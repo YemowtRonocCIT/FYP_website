@@ -55,11 +55,8 @@ def nodes_page():
     nodes = None
     buoys = None
     
-    try:
-        nodes = API.get_data(NODE_SUFFIX)
-        buoys = API.get_data(BUOY_SUFFIX)
-    except:
-        print("Error connecting to API")
+    nodes = API.get_data(NODE_SUFFIX)
+    buoys = API.get_data(BUOY_SUFFIX)
 
     return render_template('nodes_table.html', nodes=nodes, 
                         buoys=buoys, gmaps_api_key=GMAPS_API_KEY)
@@ -84,13 +81,14 @@ def node_last_message_page(sigfox_id):
 @app.route(LOCATION_SUFFIX, methods=['GET'])
 def locations_page():
     data = None
-    try:
-        data = API.get_data(LOCATION_SUFFIX)
-    except:
-        print("Error connecting to API")
+    data = API.get_data(LOCATION_SUFFIX)
+
+    location_types = None
+    if data:
+        location_types = LOCATION_TYPES
 
     return render_template('locations_table.html', locations=data,
-                                                location_types=LOCATION_TYPES)
+                                                location_types=location_types)
 
 @app.route(LOCATION_SUFFIX, methods=['POST'])
 def add_location():

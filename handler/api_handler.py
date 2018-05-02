@@ -27,9 +27,12 @@ class ApiHandler(object):
         url_suffix (str): Suffix to request specified data from API
         """
         url = self.base_url % (url_suffix)
-        response = requests.get(url)
-        data = json.loads(response.text)
-        return data
+        try:
+            response = requests.get(url)
+            data = json.loads(response.text)
+            return data
+        except requests.exceptions.ConnectionError:
+            return None
     
     def post_form(self, url_suffix, data):
         """
