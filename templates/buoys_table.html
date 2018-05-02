@@ -11,6 +11,8 @@
     <body>
         {% include 'header.html' %}
         <main>
+            <h1>Buoys</h1>
+            
             {% if buoys %}
                 {% for buoy in buoys %}
                     <div class="info-card {{ buoy.at_location }}" id="{{ buoy.location_name }}{{ buoy.buoy_id }}">
