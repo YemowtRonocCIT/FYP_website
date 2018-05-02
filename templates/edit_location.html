@@ -6,6 +6,7 @@
 
     <body>
         {% include 'header.html' %}
+        <main>
         {% if location_id %}
             <h1>Location ID: {{ location_id }}</h1>
 
@@ -32,5 +33,7 @@
         {% else %}
             <h1>No location specified</h1>
         {% endif %}
+        </main>
+        {% include 'footer.html' %}
     </body>
 </html>

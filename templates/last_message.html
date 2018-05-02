@@ -10,6 +10,7 @@
 
     <body>
         {% include 'header.html' %}
+        <main>
         {% if last_messages %}
             <!-- <table>
                 <thead>
@@ -50,5 +51,8 @@
         {% else %}
             <h3>No last messages found...</h3>
         {% endif %}
+        
+        </main>
+        {% include 'footer.html' %}
     </body>
 </html>
