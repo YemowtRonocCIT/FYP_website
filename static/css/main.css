@@ -45,7 +45,7 @@ footer {
 }
 
 .info-card {
-    width:20%;
+    min-width:20%;
     border:1px solid grey;
     display:inline-block;
     padding:1%;
