@@ -25,24 +25,28 @@
             {% endif %}
 
             {% if location_types %}
-                <h1>Add location below</h1>
+                <br>
 
-                <form action="/location/" method="POST">
-                    <p>Location Name: 
-                        <input type="text" name="location_name" id="location_name"
-                        placeholder="Location Name">
-                    </p>
+                <div class="info-card">
+                    <h2>New Location</h2>
 
-                    <p>Location Type: 
-                        <select name="location_type" id="location_type">
-                            {% for type in location_types %}
-                                <option value="{{ type }}">{{ type }}</option>
-                            {% endfor %}
-                        </select>
-                    </p>
+                    <form action="/location/" method="POST">
+                        <p>Location Name: 
+                            <input type="text" name="location_name" id="location_name"
+                            placeholder="Location Name">
+                        </p>
 
-                    <input type="submit">
-                </form>
+                        <p>Location Type: 
+                            <select name="location_type" id="location_type">
+                                {% for type in location_types %}
+                                    <option value="{{ type }}">{{ type }}</option>
+                                {% endfor %}
+                            </select>
+                        </p>
+
+                        <input type="submit" value="Add location">
+                    </form>
+                </div>
             {% endif %}
 
             {% if not locations %}

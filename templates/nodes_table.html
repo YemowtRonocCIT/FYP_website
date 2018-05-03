@@ -29,24 +29,28 @@
             {% endif %}
 
             {% if buoys %}
-                <h1>Add node below</h1>
-                <form action="/node/" method="POST">
-                    <p>Sigfox ID: 
-                        <input type="text" name="sigfox_id" id="sigfox_id"
-                        placeholder="Sigfox ID">
-                    </p>
-                    
-                        <p>Buoy:
-                            <select name="buoy_id" id="buoy_id">
-                                <option value="None">None</option>
-                                {% for buoy in buoys %}
-                                    <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
-                                {% endfor %}
-                            </select>
-                        </p>
+                <br>
 
-                    <input type="submit">
-                </form>
+                <div class="info-card">
+                    <h2>New Node</h2>
+                    <form action="/node/" method="POST">
+                        <p>Sigfox ID: 
+                            <input type="text" name="sigfox_id" id="sigfox_id"
+                            placeholder="Sigfox ID">
+                        </p>
+                        
+                            <p>Buoy:
+                                <select name="buoy_id" id="buoy_id">
+                                    <option value="None">None</option>
+                                    {% for buoy in buoys %}
+                                        <option value="{{ buoy.buoy_id }}">{{ buoy.buoy_id }}: {{ buoy.location_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </p>
+
+                        <input type="submit" value="Add Node">
+                    </form>
+                </div>
             {% else %}
                 <h2>No buoys detected</h2>
                 <p>Create a new buoy <a href="/buoy/">here.</a></p>
